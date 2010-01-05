@@ -1,0 +1,13 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "aupdate.pbl" "";
+@end;
+@begin Objects
+ "uo_updown.sru" "aupdate.pbl";
+ "w_down.srw" "aupdate.pbl";
+ "w_up.srw" "aupdate.pbl";
+ "f_connect.srf" "aupdate.pbl";
+ "gf_commit.srf" "aupdate.pbl";
+ "aupdate.sra" "aupdate.pbl";
+ "w_connect.srw" "aupdate.pbl";
+@end;
