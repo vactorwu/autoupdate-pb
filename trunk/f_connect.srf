@@ -1,0 +1,41 @@
+$PBExportHeader$f_connect.srf
+$PBExportComments$数据库连接
+global type f_connect from function_object
+end type
+
+forward prototypes
+global function integer f_connect ()
+end prototypes
+
+global function integer f_connect ();string ls_ininame,	ls_section
+
+ls_ininame = 'qcyd_sys.ini'//配置文件名
+ls_section = profilestring(ls_ininame,'Application','DatabaseName','')
+
+gs_systemname =profilestring(ls_ininame,'Application','Sysname','')
+gs_file =profilestring(ls_ininame,'Application','filename','')
+
+//连接数据库
+sqlca.dbms		=profilestring(ls_ininame,ls_section,"dbms"," ")
+sqlca.database	=profilestring(ls_ininame,ls_section,"database"," ")
+sqlca.userid	=profilestring(ls_ininame,ls_section,"userid"," ")
+sqlca.dbpass	=profilestring(ls_ininame,ls_section,"dbpass"," ")
+sqlca.logid		=profilestring(ls_ininame,ls_section,"logid"," ")
+sqlca.logpass	=profilestring(ls_ininame,ls_section,"logpass"," ")
+sqlca.servername	=profilestring(ls_ininame,ls_section,"servername"," ")
+SQLCA.AutoCommit	= False
+connect using sqlca;
+
+IF   SQLCA.SQLCode <> 0 THEN
+	if POS(SQLCA.sqlerrtext,'DBMS MSS')>0 then
+		Messagebox('网络数据库连接出错','您没有安装Microsoft SQL Server客户端组件!'+&
+		'~r~n~r~n请您安装,否则无法连接网络数据库!',exclamation!)
+		return -1
+	else
+		Messagebox('网络数据库连接出错','错误信息:'+SQLCA.sqlerrtext,exclamation! )
+		return -1
+	end if
+end if
+return 1
+end function
+

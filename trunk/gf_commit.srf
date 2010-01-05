@@ -1,0 +1,20 @@
+$PBExportHeader$gf_commit.srf
+$PBExportComments$sqlca,commit或rollback
+global type gf_commit from function_object
+end type
+
+forward prototypes
+global function long gf_commit ()
+end prototypes
+
+global function long gf_commit ();long ll_retcode
+ll_retcode = sqlca.sqlcode
+if ll_retcode=0 then
+	commit;
+else
+	//messagebox(gs_message_title,'数据库操作出错！请记录以下信息，以备软件工程师查阅~r~r'+sqlca.sqlerrtext)
+	rollback;
+end if
+return ll_retcode
+end function
+
